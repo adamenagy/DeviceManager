@@ -1,0 +1,10 @@
+C:\temp\DeviceManager\DeviceManager\DeviceManager\bin\Debug\DeviceManager.exe.config
+C:\temp\DeviceManager\DeviceManager\DeviceManager\bin\Debug\DeviceManager.exe
+C:\temp\DeviceManager\DeviceManager\DeviceManager\bin\Debug\DeviceManager.pdb
+C:\temp\DeviceManager\DeviceManager\DeviceManager\obj\Debug\DeviceManager.csprojResolveAssemblyReference.cache
+C:\temp\DeviceManager\DeviceManager\DeviceManager\obj\Debug\DeviceManager.Properties.Resources.resources
+C:\temp\DeviceManager\DeviceManager\DeviceManager\obj\Debug\DeviceManager.csproj.GenerateResource.Cache
+C:\temp\DeviceManager\DeviceManager\DeviceManager\obj\Debug\DeviceManager.exe
+C:\temp\DeviceManager\DeviceManager\DeviceManager\obj\Debug\DeviceManager.pdb
+C:\temp\DeviceManager\DeviceManager\DeviceManager\bin\Debug\App.config
+C:\temp\DeviceManager\DeviceManager\DeviceManager\obj\Debug\DeviceManager.Form1.resources
