@@ -111,6 +111,7 @@
             this.Controls.Add(this.computerList);
             this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.MaximizeBox = false;
             this.Name = "Form1";
             this.Text = "Device Manager";
             this.ResumeLayout(false);

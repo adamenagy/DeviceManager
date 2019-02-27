@@ -67,6 +67,18 @@ namespace DeviceManager
             }
         }
 
+        private void copyFile(string filePath, string folderPath)
+        {
+            File.Copy(filePath, folderPath, true);
+        }
+
+        private string getSimplifiedName(string name)
+        {
+            var parts1 = name.Split(new char[] { '_' });
+            var parts2 = parts1[parts1.Length - 1].Split(new string[] { " - " }, StringSplitOptions.None);
+            return parts1[0] + " - " + parts2[1];
+        }
+
         private void copyFiles(string fromFolder, string toFolder)
         {
             DirectoryInfo info = new DirectoryInfo(fromFolder);
@@ -76,13 +88,13 @@ namespace DeviceManager
             Directory.CreateDirectory(toFolder);
             foreach (FileInfo file in files)
             {
-                File.Copy(file.FullName, Path.Combine(toFolder, file.Name), true);
+                copyFile(file.FullName, Path.Combine(toFolder, getSimplifiedName(file.Name)));
 
                 copyProgress.Value++;
             }
         }
 
-        private void addButton_Click(object sender, EventArgs e)
+        private async void addButton_Click(object sender, EventArgs e)
         {
             if (computerList.SelectedItem == null)
             {
@@ -91,15 +103,22 @@ namespace DeviceManager
             }
 
             var selectedFolder = computerList.SelectedItem;
-            copyFiles(
-                (computerList.SelectedItem as DeviceFolder).getPath(),
-                Path.Combine(appSettings["DeviceFolder"], (computerList.SelectedItem as DeviceFolder).ToString())
-            );
+            addButton.Enabled = false;
+            var fromPath = (computerList.SelectedItem as DeviceFolder).getPath();
+            var toPath = Path.Combine(appSettings["DeviceFolder"], (computerList.SelectedItem as DeviceFolder).ToString());
+            await Task.Run(() => { copyFiles(fromPath, toPath); });
+            addButton.Enabled = true;
 
             fillList(deviceList, appSettings["DeviceFolder"]);
         }
 
-        private void removeButton_Click(object sender, EventArgs e)
+        private void deleteFile(string filePath)
+        {
+            Directory.Delete(filePath, true);
+        }
+
+
+        private async void removeButton_Click(object sender, EventArgs e)
         {
             if (deviceList.SelectedItem == null)
             {
@@ -107,7 +126,10 @@ namespace DeviceManager
                 return;
             }
 
-            Directory.Delete((deviceList.SelectedItem as DeviceFolder).getSimplifiedPath(), true);
+            removeButton.Enabled = false;
+            var filePath = (deviceList.SelectedItem as DeviceFolder).getSimplifiedPath();
+            await Task.Run(() => { deleteFile(filePath); });
+            removeButton.Enabled = true;
 
             deviceList.Items.Remove(deviceList.SelectedItem);
         }
