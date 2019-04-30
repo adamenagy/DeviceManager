@@ -52,11 +52,35 @@ namespace DeviceManager
             InitializeComponent();
             
             fillList(computerList, appSettings["ComputerFolder"]);
-            fillList(deviceList, appSettings["DeviceFolder"]);
+            //fillList(deviceList, appSettings["DeviceFolder"]);
+            fillList(deviceList, GetDeviceFolder());
+        }
+
+        private string GetDeviceFolder()
+        {
+            DriveInfo[] infos = DriveInfo.GetDrives();
+            foreach (var info in infos)
+            {
+                if (!info.IsReady)
+                    continue;
+
+                if (info.VolumeLabel.ToUpper() != "WHARFEDALE")
+                    continue;
+
+                return info.RootDirectory.FullName;
+            }
+
+            return null;
         }
 
         private void fillList(ListBox list, string folder)
         {
+            if (!Directory.Exists(folder))
+            {
+                MessageBox.Show("Folder does not exist: " + folder);
+                return;
+            }
+
             DirectoryInfo info = new DirectoryInfo(folder);
             DirectoryInfo[] directories = info.GetDirectories().OrderBy(p => p.Name).ToArray();
             list.Items.Clear();
